@@ -9,16 +9,16 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select 
 
 # Otros módulos
-import undetected_chromedriver as uc
+import undetected_chromedriver as uc # type: ignore
 import os
 from dotenv import load_dotenv
 import time
 import random
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup # type: ignore
 import requests as req
-from webdriver_manager.chrome import ChromeDriverManager 
-from selenium.webdriver.chrome.options import Options
-from zenrows import ZenRowsClient
+from webdriver_manager.chrome import ChromeDriverManager  # type: ignore
+from selenium.webdriver.chrome.options import Options # type: ignore
+from zenrows import ZenRowsClient # type: ignore
 from datetime import datetime
 
 # Pandas para manejo de datos
@@ -93,14 +93,11 @@ def extraccion_ofertas_infojobs():
     driver.get(URL)
 
     df = pd.DataFrame()
-    # diccionario_puestos = {
-    #     "data_analyst" : "https://www.infojobs.net/jobsearch/search-results/list.xhtml?keyword=analista+de+datos&normalizedJobTitleIds=&provinceIds=33&countryIds=17&cityId=&searchByType=province",
-    #     "data_science" : "https://www.infojobs.net/ofertas-trabajo?keyword=Data%20scientist&provinceIds=33&sortBy=RELEVANCE&countryIds=17&sinceDate=ANY",
-    #     "data_engineer" : "https://www.infojobs.net/ofertas-trabajo?keyword=Data%20engineer&provinceIds=33&sortBy=RELEVANCE&countryIds=17&sinceDate=ANY"
-    # }
     diccionario_puestos = {
         "data_analyst" : "https://www.infojobs.net/jobsearch/search-results/list.xhtml?keyword=analista+de+datos&normalizedJobTitleIds=&provinceIds=33&countryIds=17&cityId=&searchByType=province",
-        }
+        "data_science" : "https://www.infojobs.net/ofertas-trabajo?keyword=Data%20scientist&provinceIds=33&sortBy=RELEVANCE&countryIds=17&sinceDate=ANY",
+        "data_engineer" : "https://www.infojobs.net/ofertas-trabajo?keyword=Data%20engineer&provinceIds=33&sortBy=RELEVANCE&countryIds=17&sinceDate=ANY"
+    }
 
     sleep(4)
 
@@ -150,24 +147,6 @@ def extraccion_ofertas_infojobs():
                 sleep(1)
                 driver.execute_script("window.scrollBy(0, -200);")
                 sleep(3)
-
-                #OPCION 1
-
-                # try:
-                #     driver.find_element(By.XPATH, '//*[@id="app"]/div/div[3]/div[1]/div[3]/main/div[1]/div/ul/li[7]/button').click()
-                #     pag +=1
-
-                # except:
-                #     siguiente = driver.find_element(By.XPATH, '//*[@id="app"]/div/div[3]/div[1]/div[3]/main/div[1]/div/ul/li[6]/button').text
-                #     if siguiente == "SIGUIENTE":
-                #         driver.find_element(By.XPATH, '//*[@id="app"]/div/div[3]/div[1]/div[3]/main/div[1]/div/ul/li[6]/button').click()
-                #         pag +=1
-                #     else:
-                #         print("\nNo hay más páginas")
-                #         break
-
-
-                # OPCION 2
 
                 lista_elementos = driver.find_elements(By.CSS_SELECTOR, "ul.sui-MoleculePagination > li")
 
