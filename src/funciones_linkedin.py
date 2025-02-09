@@ -1,18 +1,18 @@
 # Librerías de extracción de datos
 # -----------------------------------------------------------------------
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup # type: ignore
 import requests
-import numpy as np
+import numpy as np # type: ignore
 import json
 import html
-from tqdm import tqdm
+from tqdm import tqdm # type: ignore
 from random import uniform
 import os
 
 
 # Tratamiento de datos
 # -----------------------------------------------------------------------
-import pandas as pd
+import pandas as pd # type: ignore
 from time import sleep
 
 def carga_csv(local_path):
