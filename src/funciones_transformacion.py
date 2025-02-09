@@ -43,8 +43,14 @@ diccionario_conversion = {
     'microsoft suite': 'Microsoft Office',
     'data scientist': 'Data Science',
     'scikit-learn':'Sklearn',
-    'Generative AI':'IA Generativa',
-    'Análisis':'Analytical skills',
+    'generative ai':'IA Generativa',
+    'análisis':'Análisis de datos',
+    'tdd':'TDD (Test Driven Development)',
+    'inteligencia artificial':'IA',
+    'ai':'IA',
+    'statistical analysis':'Análisis de datos',
+    'gestión de datos':"Data Management",
+    'gestión':'',
     'mathematics':'',
     'matemáticas':'',
     'trabajo en equipo': '',
@@ -107,6 +113,9 @@ diccionario_conversion = {
     'disaster':'',
     'purestorage':'',
     'presto':'',
+    'estadística':'',
+    'windows':'',
+    'documentación':''
 }
 
 lista_habilidades_basicas = ["Python", "Power BI", "AWS", "ETL", "Excel", "Tableau", "Plotly", "Machine Learning", "Gitlab", "Github", 'Docker', "Oracle", "Linux", 'Jenkins', 'Databricks', 'Kubernetes', 'Snowflake', 'CI/CD', 'GCP', 'CSS', 'HTML',  'Hadoop', 'Terraform', 'Sklearn', 'PySpark', 'Spark', 'Big Data', 'Kafka', 'Airflow', 'Angular', 'MongoDB', 'NoSQL', "No SQL", "SQL", 'Ansible',  'Pandas', 'C#', 'Maven', 'Jira', 'Estadística', '.NET', 'Web scraping', 'REST', 'SAP', 'SOAP', 'API', 'Javascript',  "Java", 'C++', 'Salesforce', 'XML', 'DB2', 'Spring', 'PHP', 'Hibernate', 'React', 'DBT', 'Prometheus', 'MLOps', 'TensorFlow', 'PyTorch', 'VBA',  'Looker', 'SAS', 'Confluence', 'J2EE', 'Bash', 'Cloudera', 'Cloud', 'Data Visualization', 'Data Governance', 'Hive', 'NLP', 'TypeScript', 'Cobol',  'JSON', 'Agile', 'Qlik', "Scrum", "Shell", "Node", 'Vue','OAuth', "Bases de datos", "KPI", 'Next', 'Azure', 'PowerPoint', 'Análisis de datos', 'Visualización de datos', "Redes neuronales", "DevOps", 'relacionales', 'no relacionales', 'Data Analysis', 'Problem solving', 'Problem-solving', 'A/B testing', 'Data Mining', 'Transformers', 'Big Query', 'BigQuery', 'Hugging Face', 'Selenium', 'Business Intelligence', 'communication', 'QuickSight', 'Microsoft Office', 'Microsoft Suite', 'Matlab', 'Scikit-learn', 'Data Science', 'Data Scientist', 'Corporate', 'mindset', 'degree', 'crm', 'empresas', 'disaster']
@@ -114,12 +123,12 @@ lista_habilidades_basicas = ["Python", "Power BI", "AWS", "ETL", "Excel", "Table
 
 diccionario_categorias_skills = {
     "Data Science & Machine Learning": [
-        "AI", "NLP", "Sklearn", "PySpark", "Deep Learning", 
+        "IA", "NLP", "Sklearn", "PySpark", "Deep Learning", 
         "TensorFlow", "Machine Learning", "MLOps", "Data Science", "PyTorch", 
-        "Pandas"
+        "Pandas",  'Data Mining', 'Keras', 'IA Generativa', 'Computer Vision',
     ],
     "Big Data & ETL": [
-        "Big Data", "Spark", "Databricks", "Hadoop", "Kafka", "ETL", "Airflow"
+        "Big Data", "Spark", "Databricks", "Hadoop", "Kafka", "ETL", "Airflow", 'Data Factory', 'Redshift',
     ],
     "Business Intelligence & Analytics": [
         "Data Analysis","Análisis de datos", "Google Analytics", "Looker", "Data Visualization tools", "BI (Business Intelligence)", 
@@ -127,37 +136,37 @@ diccionario_categorias_skills = {
     ],
     "Bases de Datos": [
         "Bases de datos", "Oracle", "NoSQL", "BigQuery", "Hive", "Cassandra", "Snowflake", 
-        "DB2", "SQL", "Data Warehouse"
+        "DB2", "SQL", "Data Warehouse", 'Synapse', 'Dremio', 'Redis',
     ],
     "Cloud & DevOps": [
         "Docker", "DevOps", "Terraform", "Cloud", "Azure", "GCP (Google Cloud Platform)", 
-        "AWS", "OpenStack", "Kubernetes", "Ansible", "Prometheus"
+        "AWS", "OpenStack", "Kubernetes", "Ansible", "Prometheus", "S3", 'Lambda'
     ],
     "Data Governance & Management": [
         "Data Modeling", "Data Management", "Data Governance", "DBT (Data Build Tool)"
     ],
     "Programación & Scripting": [
-        "C", "C#", "Java", "C++", "VBA", "Kotlin", "Scripting", "Shell", "Bash", "Python", "R", "Django", "Flask"
+        "C", "C#", "Java", "C++", "VBA", "Kotlin", "Scripting", "Shell", "Bash", "Python", "R", "Django", "Flask", 'LangChain', 'Matlab',
     ],
     "Infraestructura & CI/CD": [
         "Git", "Jenkins", "CI/CD", "Maven"
     ],
     "Metodologías & Habilidades": [
-        "Agile", "Scrum", "TDD", "Analytical skills", "Problem solving skills"
+        "Agile", "Scrum", "TDD (Test Driven Development)", "Analytical skills", "Problem solving skills"
     ],
     "Desarrollo Backend": [
         "Node", "PHP", "Spring", "Scala", "Cobol",  
         "Microservicios", ".NET", "Ruby", "Hibernate", "Golang", "Rust", 
     ],
     "Desarrollo Frontend": [
-        "Angular", "React", "Javascript", "HTML", "CSS", "TypeScript"
+        "Angular", "React", "Javascript", "HTML", "CSS", "TypeScript", 'Vue'
     ],
     "Herramientas Empresariales": [
         "SAS", "Confluence", "Jira", "SAP", "Salesforce", "Power Apps", "Microsoft Office", "MS Office", 
-        "PowerPoint", "Excel"
+        "PowerPoint", "Excel", 'Power Automate'
     ],
     "Otros": [
-        "REST", "API", "XML", "JSON", "Estadística", "Linux", "A/B testing",
+         "API", "REST", "SOAP", 'Elasticsearch', "XML", "JSON", "Estadística", "Linux", "A/B testing", 'Microservices', 'Ciberseguridad',
     ]
 }
 
@@ -365,7 +374,7 @@ def contador_skills(folder_path):
     for file in files_openai:
         
         file_path = os.path.join(folder_path, file)
-        with open(file_path, 'r') as archivo:
+        with open(file_path, 'r', encoding='utf-8') as archivo:
             json_datos = json.load(archivo)
 
         for oferta in json_datos:
@@ -376,6 +385,8 @@ def contador_skills(folder_path):
     print(f"Se han encontrado {len(lista_final)} skills diferentes.\n")
 
     return lista_final
+
+
 
 def filtro_skills(skill_original):
     """
@@ -459,6 +470,13 @@ def extraer_y_guardar_skills_filtradas():
         - Muestra en consola el progreso de procesamiento para cada archivo.
     """
 
+    # Comprobamos que existe la carpeta data y si no la creamos
+    file_path = "data/skills_filtradas"
+    absolute_path = os.path.abspath(file_path)
+    if not os.path.exists(absolute_path):
+        os.makedirs(absolute_path)
+
+
     folder_path_openai = "data/response_openai/"
     files_openai = os.listdir(folder_path_openai)
     diccionario_transformaciones = {}
@@ -468,7 +486,7 @@ def extraer_y_guardar_skills_filtradas():
         lista_ofertas_nuevas_skills = []
 
         file_path = os.path.join(folder_path_openai, file)
-        with open(file_path, 'r') as archivo:
+        with open(file_path, 'r', encoding='utf-8') as archivo:
             json_datos = json.load(archivo)
 
         for oferta in json_datos:
@@ -752,6 +770,12 @@ def control_errores_ingles_porcentaje_experiencia(oferta):
 
 def filtracion_hard_skills_relevantes():
 
+    # Comprobamos que existe la carpeta data y si no la creamos
+    file_path = "data/skills_filtradas_relevantes"
+    absolute_path = os.path.abspath(file_path)
+    if not os.path.exists(absolute_path):
+        os.makedirs(absolute_path)
+
     # Vamos recorriendo todos los archivos de las skills filtradas 
     folder_path_openai = "data/skills_filtradas/"
     files_openai = os.listdir(folder_path_openai)
@@ -765,7 +789,7 @@ def filtracion_hard_skills_relevantes():
     for file in files_openai:
 
         nombre_file = folder_path_openai + file
-        with open(f'{nombre_file}', 'r') as archivo:
+        with open(f'{nombre_file}', 'r', encoding="utf-8") as archivo:
             json_datos = json.load(archivo)
 
         lista_ofertas_nuevas_skills = []
