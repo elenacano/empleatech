@@ -230,11 +230,77 @@ def trasformacion_openai(client, empleo, oferta):
 
     return completion.choices[0].message.content
 
+def get_lista_ofertas():
+    lista_ofertas=[]
 
-def extracion_datos_descripciones(lista_ofertas):
+    # Files de infojobs
+    folder_path_infojobs = "../scraping_infojobs/datos_limpios/"
+    files_infojobs = os.listdir(folder_path_infojobs)
+    [lista_ofertas.append(folder_path_infojobs + file) for file in files_infojobs]
+
+    # Files de linkedin
+    folder_path_linkedin = "../scraping_linkedin/data/datos_descripcion_ofertas/"
+    files_linkedin = os.listdir(folder_path_linkedin)
+    [lista_ofertas.append(folder_path_linkedin + file) for file in files_linkedin]
+
+    return lista_ofertas
+
+
+def crear_carpetas_responese_openai():
+
+    # Comprobamos que existe la carpeta data y si no la creamos
+    file_path = "data"
+    absolute_path = os.path.abspath(file_path)
     
+    if not os.path.exists(absolute_path):
+        os.makedirs(absolute_path)
+
+    # Comprobamos que existe la carpeta response_openai dentro de data y si no la creamos
+    file_path = "data/response_openai"
+    absolute_path = os.path.abspath(file_path)
+    
+    if not os.path.exists(absolute_path):
+        os.makedirs(absolute_path)
+
+
+def elimiar_ofertas_repetidas():
+
+    lista_ofertas = get_lista_ofertas()
+
+    file_path = "data/ofertas_sin_duplicados"
+    absolute_path = os.path.abspath(file_path)
+    
+    if not os.path.exists(absolute_path):
+        os.makedirs(absolute_path)
+
+    for file_path in lista_ofertas:
+
+        nombre_file = file_path.split("/")[-1]
+        
+        # Cargamos el fichero
+        df = pd.read_csv(file_path, index_col=0)
+
+        # Eliminar duplicados basados en 'titulo_oferta' y 'empresa', conservando la primera aparición
+        df = df.drop_duplicates(subset=['titulo_oferta', 'empresa'], keep='first')
+
+        # Guardar el DataFrame limpio
+        df.to_csv(f"data/ofertas_sin_duplicados/{nombre_file}", index=False)
+  
+
+
+
+def extracion_datos_descripciones():
+
+    crear_carpetas_responese_openai()
+    elimiar_ofertas_repetidas()
     client = conexion_openai('apikey_openai')
 
+    # Obtenemos la lista de los df
+    lista_ofertas=[]
+    folder_path_linkedin = "data/ofertas_sin_duplicados/"
+    files_linkedin = os.listdir(folder_path_linkedin)
+    [lista_ofertas.append(folder_path_linkedin + file) for file in files_linkedin]
+ 
     for file_path in lista_ofertas:
         
         # Para cada fichero sacamos el tipo de empleo
@@ -249,8 +315,8 @@ def extracion_datos_descripciones(lista_ofertas):
 
         json_data = []
 
-        for row in range(df.shape[0]):
-        #for row in range(200): ()
+        #for row in range(df.shape[0]):
+        for row in range(min(200, df.shape[0])):
 
             # Hacemos un json con los datos de cada fila
             row_data = df.iloc[row].to_dict()
@@ -272,6 +338,7 @@ def extracion_datos_descripciones(lista_ofertas):
             json_data.append(row_data)
             with open(f"data/response_openai/transformed_{nombre_file}.json", "w", encoding="utf-8") as json_file:
                 json.dump(json_data, json_file, ensure_ascii=False, indent=4)
+
 
 def contador_skills(folder_path):
     """
