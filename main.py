@@ -397,7 +397,7 @@ with col2:
                                                 </div>
                                                 <details>
                                                     <summary>Ver descripción</summary>
-                                                    <p>{offer["descripcion"]}</p>
+                                                    <p>{offer["descripcion_original"]}</p>
                                                 </details>
                                             </div>
                                             '''

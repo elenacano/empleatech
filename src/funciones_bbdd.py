@@ -89,24 +89,6 @@ def cargar_skills_mongo():
 
     if client:
 
-        # Lista de las skills sin categorizar
-        # db = client['db_empleatech_v2']
-        # collection = db['hard_skills']
-
-        # try:
-        #     file_path = "data/lista_hard_skills.pkl"
-        #     with open(file_path, 'rb') as file:
-        #         lista_hard_skills = pickle.load(file)
-        #     documento = {"lista_skills": lista_hard_skills}
- 
-        #     collection.insert_one(documento)
-
-        #     #print("Skills sin categorizar insertadas en la base de datos correctamente.")
-                
-        # except Exception as e:
-        #     print(f"Ha ocurrido un error durante la insercion: {e}")
-
-
         # Lista de las skills categorizadas
         db = client['db_empleatech_v2']
         collection = db['hard_skills_categorizadas']
@@ -166,7 +148,6 @@ def obtener_todos_los_datos():
         return {
             "linkedin": datos_linkedin,
             "infojobs": datos_infojobs,
-            "skills": datos_skills[0]['lista_skills'],
             "skills_categorizadas": datos_skills_categorizadas[0]["diccionario_skills_categorizadas"]
         }
 

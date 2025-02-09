@@ -121,6 +121,7 @@ def get_empleo(index, df):
     empleo["fecha_publicacion"] = df[df.index==index]["fecha_publicacion"].values[0]
     empleo["tipo_empleo"] = df[df.index==index]["tipo_empleo"].values[0]
     empleo["descripcion"] = df[df.index==index]["descripcion"].values[0]
+    empleo["descripcion_original"] = df[df.index==index]["descripcion_original"].values[0]
     empleo["min_salario"] = df[df.index==index]["min_salario"].values[0]
     empleo["max_salario"] = df[df.index==index]["max_salario"].values[0]
     empleo["nivel_ingles"] = df[df.index==index]["nivel_ingles"].values[0]
