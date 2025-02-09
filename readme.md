@@ -10,7 +10,7 @@ Nuestra solución recopila y analiza datos clave, como nivel de inglés, años d
 
 El proyecto ha sido desarrollado con un pipeline ETL estructurado para la extracción, transformación y carga de datos de ofertas de empleo obtenidas de LinkedIn e InfoJobs. Posteriormente, un sistema de recomendación basado en machine learning optimiza la búsqueda y presenta los resultados a través de una interfaz en Streamlit.
 
-🌟Anímese y echele un ojo a la web en [https://empleatech.streamlit.app/](https://empleatech.streamlit.app/)🌟
+🌟Anímete y echele un ojo a nuestra web en [https://empleatech.streamlit.app/](https://empleatech.streamlit.app/)🌟
 
 
 
