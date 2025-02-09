@@ -10,7 +10,7 @@ Nuestra solución recopila y analiza datos clave, como nivel de inglés, años d
 
 El proyecto ha sido desarrollado con un pipeline ETL estructurado para la extracción, transformación y carga de datos de ofertas de empleo obtenidas de LinkedIn e InfoJobs. Posteriormente, un sistema de recomendación basado en machine learning optimiza la búsqueda y presenta los resultados a través de una interfaz en Streamlit.
 
-Si lo que desea es visitar la página web e interactuar con el recomendador de ofertas de empleo lo pude encontrar en: [https://empleatech.streamlit.app/](https://empleatech.streamlit.app/), le animamos a echarle un ojo 🔍.
+🌟Anímese y echele un ojo a la web en [https://empleatech.streamlit.app/](https://empleatech.streamlit.app/)🌟
 
 
 
@@ -55,7 +55,113 @@ Si lo que desea es visitar la página web e interactuar con el recomendador de o
     pip install -r requirements.txt
     ```
 
-# Funcionamiento paso a paso:
+
+# Uso Paso a Paso
+## 1. Extracción de Datos
+
+- **Ejecutar el scraping de LinkedIn:**
+
+    La parte del código relativa al scrapeo de LinkedIn se encuentra en la carpeta `scraping_linkedin`.
+
+    ```bash
+    python scraping_linkedin/linkedin/run_spider.py
+    jupyter notebook scraping_linkedin/detailed_job_info.ipynb
+    ```
+
+- **Ejecutar el scraping de InfoJobs:**
+
+    La parte del código relativa al scrapeo de Infojobs se encuentra en la carpeta `scraping_infojobs`.
+
+    Rellenar el archivo scraping_infojobs\.env con un usuario y contraseña de Infojobs, (a poder ser uno nuevo y no el personal por si acaso acaba banneado por actividad sospechosa). Ejecutar los notebooks:
+
+    ```bash
+    jupyter notebook scraping_infojobs\selenium_infojobs.ipynb
+    jupyter notebook scraping_infojobs\limpieza_datos.ipynb
+    ```
+    
+## 2. Transformación y Carga en Base de Datos
+
+La parte del código relativa a transformación y carga se encuentra en la carpeta `limpieza_y_carga`.
+
+Antes de ejecutar esta parte se necesita rellenar las variable de entornoen `limpieza_y_carga\.env`. 
+
+- En primer lugar se necesita un apikey de la API e OpenAI, debe registrarse en [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview) y generar la clave.
+- Para la carga en la base de datos es necesario registrarse en [https://www.mongodb.com/es/cloud/atlas/register](https://www.mongodb.com/es/cloud/atlas/register). Creamos un usuario con nombre *root* y una password, esta contraseña la debemos añadir al archivo `limpieza_y_carga\.env`. 
+
+Una vez añadidas la variables de entorno ejecutamos el notebook:
+```bash
+jupyter notebook limpieza_y_carga/transformacion_y_carga.ipynb
+```
+
+## 3. Modelo del Recomendador
+
+La parte del código relativa al eda y prueba del modelo se encuentra en la carpeta `recomendador`.
+
+Para visualizar el EDA ejecute:
+```bash
+jupyter notebook recomendador\eda.ipynb
+```
+
+Si desea probar paso a paso el recomendador ejecute:
+```bash
+jupyter recomendador\vectorizacion_y_recomendador.ipynb
+```
+
+## 4. Ejecución de la Aplicación
+
+El código relativo a la aplicación se encuentra en el archivo **main.py**.
+
+Se puede lanzar en local ejecutando:
+```bash
+python -m streamlit run main.py     
+```
+
+# Aplicación
+
+El sistema de recomendación está implementado en una aplicación web en Streamlit, donde los usuarios pueden configurar filtros y recibir recomendaciones precisas de empleo.
+
+🔗 Demo en Streamlit: https://empleatech.streamlit.app
+
+
+# Dependencias
+Las principales bibliotecas utilizadas son:
+- pandas
+- numpy
+- dotenv
+- requests
+- tqdm
+- matplotlib
+- seaborn
+- Scrapy
+- Selenium
+- BeautifulSoup
+- OpenAI
+- pymongo
+- scikit-learn
+- Streamlit
+
+Las dependencias están listadas en `requirements.txt` para su instalación con pip.
+
+# Informe final y próximos pasos
+Se puede consultar un informe más detallado del proyecto en el siguiente [enlace](Memoria_Empleatech.pdf). 
+
+## Próximos pasos:
+- Expansión de la base de datos con ofertas de otras plataformas como Indeed o Glassdoor.
+- Automatización del pipeline ETL para actualizaciones diarias.
+- Optimización de costos con modelos de IA alternativos.
+- Mejora de la página web mediante el desarrollo de un backend y frontend.
+- Posibilidad de aplicar directamente a las ofertas desde la plataforma.
+- Desarrollo de un sistema de registro para usuarios.
+- Integración con plataformas de formación para sugerencias de cursos.
+
+# Contacto
+Para dudas, sugerencias o contacto profesional:
+- GitHub: https://github.com/elenacano
+- LinkedIn: https://www.linkedin.com/in/elena-cano-castillejo/
+
+
+
+<!-- # Funcionamiento paso a paso de la ETL:
 
 ## **1. Extracción**
 
@@ -84,44 +190,4 @@ Después se lleva a cabo la limpieza de los JSON generados, lo agrupan mismas sk
 
 
 ## **3. Carga a la BBDD**
-Para este proyecto hemos escogido una base de datos NoSQL, almacenaremos los datos en colecciones en el servidor de MongoAtlas. Para ello es necesario registrarse en [https://www.mongodb.com/es/cloud/atlas/register](https://www.mongodb.com/es/cloud/atlas/register). Creamos un usuario con nombre *root* y una password, esta contraseña la debemos añadir al archivo `limpieza_y_carga\.env.txt`. Finlmente cargamos los datos a una base de datos llamada *db_empleatech_v2*, este proceso de carga se lleva a cabo al final del notebook `limpieza_y_carga\transformacion_y_carga.ipynb`.
-
-## **4. Recomendador**
-
-
-
-# Dependencias
-Las principales bibliotecas utilizadas son:
-- pandas
-- numpy
-- dotenv
-- requests
-- tqdm
-- matplotlib
-- seaborn
-- Scrapy
-- Selenium
-- BeautifulSoup
-- OpenAI
-- pymongo
-- scikit-learn
-- Streamlit
-
-Las dependencias están listadas en `requirements.txt` para su instalación con pip.
-
-# Informe final y próximos pasos
-Se puede consultar un informe completo del proyecto más detallado en el siguiente [enlace](Memoria_Empleatech.pdf). 
-
-## Próximos pasos:
-- Expansión de la base de datos con ofertas de otras plataformas como Indeed o Glassdoor.
-- Automatización del pipeline ETL para actualizaciones diarias.
-- Optimización de costos con modelos de IA alternativos.
-- Mejora de la página web mediante el desarrollo de un backend y frontend.
-- Posibilidad de aplicar directamente a las ofertas desde la plataforma.
-- Desarrollo de un sistema de registro para usuarios.
-- Integración con plataformas de formación para sugerencias de cursos.
-
-# Contacto
-Para dudas, sugerencias o contacto profesional:
-- GitHub: https://github.com/elenacano
-- LinkedIn: https://www.linkedin.com/in/elena-cano-castillejo/
+Para este proyecto hemos escogido una base de datos NoSQL, almacenaremos los datos en colecciones en el servidor de MongoAtlas. Para ello es necesario registrarse en [https://www.mongodb.com/es/cloud/atlas/register](https://www.mongodb.com/es/cloud/atlas/register). Creamos un usuario con nombre *root* y una password, esta contraseña la debemos añadir al archivo `limpieza_y_carga\.env.txt`. Finlmente cargamos los datos a una base de datos llamada *db_empleatech_v2*, este proceso de carga se lleva a cabo al final del notebook `limpieza_y_carga\transformacion_y_carga.ipynb`. -->
