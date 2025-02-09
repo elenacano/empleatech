@@ -24,6 +24,7 @@ from datetime import datetime
 # Pandas para manejo de datos
 import pandas as pd
 import numpy as np
+import re
 
 from time import sleep
 
@@ -171,3 +172,95 @@ def extraccion_ofertas_infojobs():
                 break
 
         driver.quit()
+
+
+def procesar_cabecera(cabecera):
+        partes = cabecera.split("\n")
+        job_title, company_name = None, None
+        min_salary, max_salary = np.nan, np.nan
+        fecha_publicacion = np.nan
+
+        if partes[1] in ["Proceso online", "Executive"]:
+            job_title, company_name = partes[2], partes[3]
+        else:
+            job_title, company_name = partes[1], partes[2]
+
+        for parte in partes:
+            if "salario" in parte.lower():
+                if parte.lower() == "salario no disponible":
+                    min_salary, max_salary = np.nan, np.nan
+                else:
+                    palabras = parte.split()
+                    min_salary, max_salary = palabras[1], palabras[3]
+
+            if "publicada" in parte.lower():
+                fecha_publicacion = parte
+
+        return job_title, company_name, fecha_publicacion, min_salary, max_salary
+
+def extraer_datos_cabecera_infojobs():
+
+    file_path = "datos_limpios"
+    absolute_path = os.path.abspath(file_path)
+
+    if not os.path.exists(absolute_path):
+        os.makedirs(absolute_path)
+
+
+    empleos = ["data_science", "data_analyst", "data_engineer"]
+
+    for empleo in empleos:
+        df = pd.read_csv(f"datos_crudo/infojobs_{empleo}.csv", index_col=0)
+
+        # Usar .apply una sola vez para descomponer los valores
+        df["plataforma"] = "infojobs"
+        df[["titulo_oferta", "empresa", "fecha_publicacion", "min_salario", "max_salario"]] = df["cabecera"].apply(procesar_cabecera).apply(pd.Series)
+        df["descripcion"] = df["contenido"]
+
+        col = df.pop('url_oferta')  # Extrae la columna
+        df.insert(9, 'url_oferta', col)
+
+        df.drop(columns=["cabecera", "contenido"], inplace=True)
+
+        df.to_csv(f"datos_limpios/infojobs_{empleo}.csv")
+
+    print("Datos guardados correctamente")
+
+
+def replace_newlines_with_br(text):
+    return text.replace("\n", "<br>")
+
+def job_description_to_html(text):
+    text = text.strip()
+  
+    # Convertir títulos de sección en <h2>
+    sections = [
+        "Requisitos mínimos", "Requisitos", "Descripción"
+    ]
+    for section in sections:
+        text = re.sub(rf"{section}", f"<br><h3>{section}</h3>", text)
+
+    # Convertir subtítulos en <h3>
+    subtitles = ["Estudios mínimos", "Experiencia mínima"]
+    for subtitle in subtitles:
+        text = re.sub(rf"\b{subtitle}\b", f"<h4>{subtitle}</h4>", text)
+
+
+    # Convertir ciertas palabras clave en negrita
+    text = re.sub(r"(BASIC QUALIFICATIONS|PREFERRED QUALIFICATIONS|El ideal candidato)", r"<strong>\1</strong><br>", text)
+
+    return text
+
+def limpieza_descripcion():
+    empleos = ["data_science", "data_analyst", "data_engineer"]
+
+    for empleo in empleos:
+        df = pd.read_csv(f"datos_limpios/infojobs_{empleo}.csv", index_col=0)
+        df["descripcion_original"] = df["descripcion"].apply(lambda x: replace_newlines_with_br(x))
+        df["descripcion_original"] = df["descripcion_original"].apply(lambda x: job_description_to_html(x))
+        display(df.head())
+
+        porcentaje = round(df[df["min_salario"].notna()].shape[0]*100/df.shape[0],2)
+        print(f'El porcentaje de ofertas con salario para {empleo} es: {porcentaje}%\n')
+
+        df.to_csv(f"datos_limpios/infojobs_{empleo}.csv")
