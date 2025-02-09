@@ -1,6 +1,36 @@
 ![alt text](imagenes/logo_sin_fondo_2.png)
 
 
+# Descripción
+
+Empleatech es una innovadora plataforma de búsqueda de empleo diseñada para
+optimizar y personalizar la experiencia de los candidatos en la búsqueda de oportunidades laborales. Actualmente, las plataformas tradicionales como LinkedIn e InfoJobs presentan filtros imprecisos, lo que genera frustración y pérdida de tiempo en los usuarios.
+
+Nuestra solución recopila y analiza datos clave, como nivel de inglés, años de experiencia y habilidades técnicas (hard skills), para recomendar ofertas de trabajo alineadas con el perfil del usuario.
+
+El proyecto ha sido desarrollado con un pipeline ETL estructurado para la extracción, transformación y carga de datos de ofertas de empleo obtenidas de LinkedIn e InfoJobs. Posteriormente, un sistema de recomendación basado en machine learning optimiza la búsqueda y presenta los resultados a través de una interfaz en Streamlit, la cual se puede visitar pinchando [aquí](https://empleatech.streamlit.app/). 
+
+
+# Objetivos
+
+1. Extracción y procesamiento de datos:
+    - Web scraping de LinkedIn mediante Scrapy y BeautifulSoup.
+    - Web scraping de InfoJobs mediante Selenium.
+    
+2. Transformación de datos:
+    -   Uso de OpenAI para extraer habilidades, nivel de inglés y experiencia de las descripciones de las ofertas.
+    - Agrupación de términos similares para mejorar la precisión del sistema de recomendación.
+    - Filtrado de skills, quedándonos con aquellas con un mínimo de apariciones.
+
+3. Almacenamiento y consulta de datos:
+    - Uso de MongoDB Atlas para gestionar y almacenar la información de las ofertas de trabajo y las skills.
+
+4. Implementación del recomendador:
+    - Modelo basado en similitud del coseno para analizar la compatibilidad entre el perfil del usuario y las ofertas.
+    - Ajuste dinámico de filtros según habilidades, experiencia y nivel de inglés.
+
+5. Despliegue de la aplicación:
+    - Creación de una interfaz intuitiva en Streamlit para que los usuarios puedan interactuar con las recomendaciones.
 
 # Funcionamiento paso a paso del Pipeline ETL:
 
@@ -28,3 +58,20 @@ Después se lleva a cabo la limpieza de los JSON generados, lo agrupan mismas sk
 
 ## **3. Carga a la BBDD**
 Para este proyecto hemos escogido una base de datos NoSQL, almacenaremos los datos en colecciones en el servidor de MongoAtlas. Para ello es necesario registrarse en [https://www.mongodb.com/es/cloud/atlas/register](https://www.mongodb.com/es/cloud/atlas/register). Creamos un usuario con nombre *root* y una password, esta contraseña la debemos añadir al archivo `limpieza_y_carga\.env.txt`. Finlmente cargamos los datos a una base de datos llamada *db_empleatech_v2*, este proceso de carga se lleva a cabo al final del notebook `limpieza_y_carga\transformacion_y_carga.ipynb`.
+
+# Informe final y próximos pasos
+Se puede consultar un informe completo del proyecto más detallado en el siguiente [enlace](Memoria_Empleatech.pdf). 
+
+## Próximos pasos:
+- Expansión de la base de datos con ofertas de otras plataformas como Indeed o Glassdoor.
+- Automatización del pipeline ETL para actualizaciones diarias.
+- Optimización de costos con modelos de IA alternativos.
+- Mejora de la página web mediante el desarrollo de un backend y frontend.
+- Posibilidad de aplicar directamente a las ofertas desde la plataforma.
+- Desarrollo de un sistema de registro para usuarios.
+- Integración con plataformas de formación para sugerencias de cursos.
+
+# Contacto
+Para dudas, sugerencias o contacto profesional:
+- GitHub: https://github.com/elenacano
+- LinkedIn: https://www.linkedin.com/in/elena-cano-castillejo/
