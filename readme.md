@@ -2,7 +2,7 @@
 
 
 
-# Funcionamiento paso a paso:
+# Funcionamiento paso a paso del Pipeline ETL:
 
 ## **1. Extracción**
 
@@ -23,4 +23,8 @@ El proceso de transformación y limpeza se lleva a cabo en la carpeta `limpieza_
 
 El primer paso consiste en recorrer todos los archivos obtenidos en el paso anterior y de cada descripción extraer los años de experiencia que piden, el nivel de inglés, las hard skills necesarias, las hard skill deseables y un porcentaje de ajuste. Este porcetaje representa cuanto se ajusta la descripción de la oferta en cuanto al puesto para el que se realizó la busqueda, por ejemplo, Data analyst. Este proceso se lleva a cabo mediante la API de OpenAI con el modelo gpt-4o-mini. Para poder ejecutar el notebook necesitar darte de alta en [https://platform.openai.com/docs/overview](https://platform.openai.com/docs/overview). Una vez hayas obtenido tu API key rellena el campo *apikey_openai* en `limpieza_y_carga\.env.txt` y ya podreás ejecutar la primera parte del notebook para la extracción de las descripciones.
 
+Después se lleva a cabo la limpieza de los JSON generados, lo agrupan mismas skills con distintos nombres y se filtran aquellas irrelevantes, una vez las skills está filtradas se guardan los archivos en la carpeta `limpieza_y_carga\data\skills_filtradas`. En total entre todas las ofertas hay una 3000 skills, tenemos que reducir este número, por lo que nos vamos a quedar con las skills que tengan un mínimo de 5 apariciones para cada tipo de empleo. Una vez tenemos esta lista, filtramos de nuevo las ofertas y toda aquella skill que no esté dentro de la lista de skill relevantes se elimina. Las ofertas filtradas ya con las skills relevantes se almacenan en `limpieza_y_carga\data\skills_filtradas_relevantes`. Además también se genera una lista con todas las skills relevantes que se puede consultar en `limpieza_y_carga\data\lista_hard_skills.pkl`. Como último paso las skills de esta lista son divididas en distintas categorías, para que la visualización de estas en la aplicación sea más amigable, aunque este sea un paso posterior ya hay que dejarlo preparado. La lista de skills categorizadas se encuentra en `limpieza_y_carga\data\diccionario_skills_categorizadas.pkl`.
 
+
+## **3. Carga a la BBDD**
+Para este proyecto hemos escogido una base de datos NoSQL, almacenaremos los datos en colecciones en el servidor de MongoAtlas. Para ello es necesario registrarse en [https://www.mongodb.com/es/cloud/atlas/register](https://www.mongodb.com/es/cloud/atlas/register). Creamos un usuario con nombre *root* y una password, esta contraseña la debemos añadir al archivo `limpieza_y_carga\.env.txt`. Finlmente cargamos los datos a una base de datos llamada *db_empleatech_v2*, este proceso de carga se lleva a cabo al final del notebook `limpieza_y_carga\transformacion_y_carga.ipynb`.
