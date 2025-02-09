@@ -1,4 +1,4 @@
-![alt text](imagenes/logo_sin_fondo_2.png)
+![alt text](imagenes/portada.png)
 
 
 # Descripción
@@ -10,49 +10,50 @@ Nuestra solución recopila y analiza datos clave, como nivel de inglés, años d
 
 El proyecto ha sido desarrollado con un pipeline ETL estructurado para la extracción, transformación y carga de datos de ofertas de empleo obtenidas de LinkedIn e InfoJobs. Posteriormente, un sistema de recomendación basado en machine learning optimiza la búsqueda y presenta los resultados a través de una interfaz en Streamlit.
 
-Si lo que desea es visiar la página web e interactuar con el recomendador de ofertas de empleo acceda a tarvés del link [https://empleatech.streamlit.app/](https://empleatech.streamlit.app/). 
+Si lo que desea es visitar la página web e interactuar con el recomendador de ofertas de empleo lo pude encontrar en: [https://empleatech.streamlit.app/](https://empleatech.streamlit.app/), le animamos a echarle un ojo 🔍.
+
 
 
 # Objetivos
 
-1. Extracción y procesamiento de datos:
+1. **Extracción y procesamiento de datos:**
     - Web scraping de LinkedIn mediante Scrapy y BeautifulSoup.
     - Web scraping de InfoJobs mediante Selenium.
     
-2. Transformación de datos:
+2. **Transformación de datos:**
     -   Uso de OpenAI para extraer habilidades, nivel de inglés y experiencia de las descripciones de las ofertas.
     - Agrupación de términos similares para mejorar la precisión del sistema de recomendación.
     - Filtrado de skills, quedándonos con aquellas con un mínimo de apariciones.
 
-3. Almacenamiento y consulta de datos:
+3. **Almacenamiento y consulta de datos:**
     - Uso de MongoDB Atlas para gestionar y almacenar la información de las ofertas de trabajo y las skills.
 
-4. Implementación del recomendador:
+4. **Implementación del recomendador:**
     - Modelo basado en similitud del coseno para analizar la compatibilidad entre el perfil del usuario y las ofertas.
     - Ajuste dinámico de filtros según habilidades, experiencia y nivel de inglés.
 
-5. Despliegue de la aplicación:
+5. **Despliegue de la aplicación:**
     - Creación de una interfaz intuitiva en Streamlit para que los usuarios puedan interactuar con las recomendaciones.
 
 
 # Instalación
 1. Clonar el repositorio:
 
-```bash
-git clone https://github.com/elenacano/empleatech.git
-cd empleatech
-```
+    ```bash
+    git clone https://github.com/elenacano/empleatech.git
+    cd empleatech
+    ```
 
 2. Crear y activar un entorno virtual:
-```bash
-python -m venv env
-source env/bin/activate  # macOS/Linux
-env\Scripts\activate  # Windows
-```
+    ```bash
+    python -m venv env
+    source env/bin/activate  # macOS/Linux
+    env\Scripts\activate  # Windows
+    ```
 3. Instalar dependencias:
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 # Funcionamiento paso a paso:
 
