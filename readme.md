@@ -10,6 +10,8 @@ Nuestra solución recopila y analiza datos clave, como nivel de inglés, años d
 
 El proyecto ha sido desarrollado con un pipeline ETL estructurado para la extracción, transformación y carga de datos de ofertas de empleo obtenidas de LinkedIn e InfoJobs. Posteriormente, un sistema de recomendación basado en machine learning optimiza la búsqueda y presenta los resultados a través de una interfaz en Streamlit.
 
+Se puede consultar un informe más detallado del proyecto en el siguiente [enlace](Memoria_Empleatech.pdf).
+
 
 <!-- 🌟Anímete y echele un ojo a nuestra web en [https://empleatech.streamlit.app/](https://empleatech.streamlit.app/)🌟 -->
 
@@ -120,8 +122,11 @@ python -m streamlit run main.py
 # Aplicación
 
 El sistema de recomendación está implementado en una aplicación web en Streamlit, donde los usuarios pueden configurar filtros y recibir recomendaciones precisas de empleo.
+La demo muestra los datos almacenados en la última ejecución lanzada a día 8/2/2025, si se desea datos actualizados debe lanzarse en local siguiendo los pasos anteriores.
 
 🔗 Demo en Streamlit: https://empleatech.streamlit.app
+
+Página web funcional a día 8 de febrero de 2025.
 
 
 # Dependencias
